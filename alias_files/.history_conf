@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Bash history configuration
+# Max number of commands in session list
+HISTSIZE=10000
+
+# Max number of lines in bash history
+HISTFILESIZE=20000
+
+# Ignore spaces and duplications
+HISTCONTROL=ignoreboth
+
+# Ignore certain commands
+HISTIGNORE='sudo *':'echo w*' 
+
+# Add history immediately
+PROMPT_COMMAND='history -a' 
+
+# Append new history instead of overwritting
+shopt -s histappend
+
+# clear bash history
+alias clhist='history -c && history -w && echo "" > ~/.bash_history'

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Import styles
+if [ -f ~/.alias/.styles ]; then
+    . ~/.alias/.styles
+fi
+
+# Function to display just the current working directory instead of who path.
+# Includes certain emojis with the cwd.
+function home_prompt {
+    local cwd=$(pwd)
+    if [[ "$cwd" == "$HOME" ]]; then
+        echo "Home${HOUSE}"
+    elif [[ "$cwd" == "$HOME/Documents" ]]; then
+        echo "Documents${DOCS}"
+    elif [[ "$cwd" == "$HOME/Downloads" ]]; then
+        echo "Downloads${DOWNLOAD}"
+    elif [[ "$cwd" == "$HOME/Github" ]]; then
+        echo "Github${GH}"
+    elif [[ "$cwd" == "$HOME/Desktop" ]]; then
+        echo "Desktop${DT} "
+    elif [[ "$cwd" == "$HOME/Videos" ]]; then
+        echo "Videos${VID} "
+    elif [[ "$cwd" == "$HOME/Music" ]]; then
+        echo "Music${MUSIC} "
+    elif [[ "$cwd" == "$HOME/Pictures" ]]; then
+        echo "Pictures${PIC} "
+    else
+        echo "$cwd"
+    fi
+}
+
+# Set Default to default system prompt
+DEFAULT=$PS1
+
+TEST='🚀 \u@\h:\w$  '
+
+# Custom prompts
+CUSTOM="${BOLD}${GREEN}\$(home_prompt) \$>${RESET} "
+
+# 24 hour clock without seconds
+TIME24='\A${CLOCK}  \$> '
+
+# 24 hour clock with seconds
+TIME24S='\t${CLOCK}  \$> '
+
+# 12 hour clock without seconds
+TIME12='\@${CLOCK}  \$> '
+
+# 12 hour clock with seconds
+TIME12S='\T${CLOCK}  \$> '
+
+
+# Set the prompt
+PS1=$CUSTOM

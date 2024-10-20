@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Clone git repository
+alias clone='git clone'

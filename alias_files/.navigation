@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Navigation Aliases
+alias home='cd ~/'              # Navigate to the home directory
+alias dl='cd ~/Downloads'        # Navigate to the Downloads directory
+alias dt='cd ~/Desktop'          # Navigate to the Desktop directory
+alias docs='cd ~/Documents'      # Navigate to the Documents directory
+alias gh='cd ~/Github'           # Navigate to the GitHub directory
+alias vids='cd ~/Videos'         # Navigate to the Videos directory
+alias music='cd ~/Music'         # Navigate to the Music directory
+alias pics='cd ~/Pictures'       # Navigate to the Pictures directory
+
+# Additional Navigation Aliases
+alias upone='cd ..'                # Go up one directory
+

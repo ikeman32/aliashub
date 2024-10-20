@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Python Aliases
+# ==============
+
+# Run a python script
+alias pyrun='python3'
+
+# Install python library
+alias pyinstall='pip3 install -y'
+
+# Uninstall python library
+alias pyrem='pip3 uninstall'
+
+# Vitual environment
+alias vpenv='python3 -m venv myvenv' # Set virtual environment path to myvenv
+alias activate='source myvenv/bin/activate' # activate virtual environment
+# alias vpy='python3 -m venv'  # Create virtual environment
+# alias activate='source ./*/bin/activate'  # Activate virtual environment

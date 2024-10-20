@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Set the default editor
+edit='nano'
+
+alias edalias='$edit ~/.alias/.bash_aliases' # Edit bash aliases
+alias edfunc='$edit ~/.alias/.bash_functions' # Edit bash functions
+alias edcmd='$edit ~/.alias/.cl' # Edit commandline aliases
+alias edconf='$edit ~/.alias/.confedit' # Edit configuration aliases
+alias ednav='$edit ~/.alias/.navigation' # Edit edit navigation aliases
+alias edpack='$edit ~/.alias/.package' # Edit package management aliases
+alias edrc='$edit ~/.bashrc' # Edit user bashrc file
+alias edprompt='$edit ~/.alias/.prompts' # Edit prompt config file
