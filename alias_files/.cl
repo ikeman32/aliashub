@@ -17,3 +17,4 @@ alias mdnow='sudo mkdir' # Make directory with elevated privileges
 alias del='rm' # Delete a file
 alias delnow='sudo rm -i' # Delete file interactively with elevated privileges
 
+alias path='echo $PATH'
