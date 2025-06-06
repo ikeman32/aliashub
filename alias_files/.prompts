@@ -36,7 +36,7 @@ DEFAULT=$PS1
 TEST='🚀 \u@\h:\w$  '
 
 # Custom prompts
-CUSTOM="${BOLD}${GREEN}\$(home_prompt) \$>${RESET} "
+CUSTOM="\[${BOLD}${GREEN}\]\$(home_prompt)\[${RESET}\] \$> "
 
 # 24 hour clock without seconds
 TIME24='\A${CLOCK}  \$> '
