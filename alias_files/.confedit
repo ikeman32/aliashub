@@ -11,3 +11,4 @@ alias ednav='$edit ~/.alias/.navigation' # Edit edit navigation aliases
 alias edpack='$edit ~/.alias/.package' # Edit package management aliases
 alias edrc='$edit ~/.bashrc' # Edit user bashrc file
 alias edprompt='$edit ~/.alias/.prompts' # Edit prompt config file
+alias estarship='$edit ~/.config/starship.toml' # Edit starship config

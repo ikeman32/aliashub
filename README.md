@@ -16,9 +16,24 @@ AliasHub is a comprehensive alias management system for Bash, designed to enhanc
 - Centralized management of Bash aliases
 - Pre-configured aliases for common tasks
 - Easy-to-use command-line shortcuts
-- Customizable prompt configurations
+- Customizable prompt configurations via starship
 - Organized structure for different types of aliases (e.g., git, navigation, package management)
 - Flexible and extensible design
+
+**Changes**
+I've made some drastic changes to the prompt configuration because the original method sucked.
+After discovering [starship](https://starship.rs/). Starship offers way better configurations for the
+commandline than my feeble attempt at it. It is truned off by default because if you want to use it you have to choses to install it. 
+
+To install via curl: curl -sS https://starship.rs/install.sh | sh
+
+or [Hombrew(https://brew.sh/)]: brew install starship
+
+After installing starship navigate to ~/.alias/.propmts and uncomment eval "$(starship init bash)"
+Then navigate to ~/.alias/.starship_config and uncomment the only commented line there. Save both files and open a terminal you should see somthing like this 
+![image](image.png)
+
+When I figure out how to automate this entire process I will push an update.
 
 ## Installation
 

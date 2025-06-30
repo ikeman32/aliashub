@@ -74,5 +74,11 @@ if [ -f ~/.alias/.python ]; then
     . ~/.alias/.python
 fi
 
+# Import ssh aliases
+if [ -f ~/.alias/.ssh ]; then
+    . ~/.alias/.ssh
+fi
+
+
 # Run logo function from .bash_functions
 logo

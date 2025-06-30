@@ -1,55 +1,91 @@
 #!/usr/bin/env bash
 
-# Import styles
-if [ -f ~/.alias/.styles ]; then
-    . ~/.alias/.styles
+# ============================================================
+# FILE        : ~/.alias/.prompts
+# PURPOSE     : Manages and persists Starship prompt themes
+# AUTHOR      : David H. Isakson II
+# DESCRIPTION : Provides a menu-driven interface to switch
+#               between Starship configuration files and
+#               persist that choice across terminal sessions.
+# ============================================================
+
+# === Define Starship configuration variables ===
+# Each variable contains an `export` statement that sets
+# STARSHIP_CONFIG to a different themed config file
+starship_default='export STARSHIP_CONFIG=~/.alias/starship/starship-default.toml'
+starship_custom1='export STARSHIP_CONFIG=~/.alias/starship/starship-custom1.toml'
+starship_custom2='export STARSHIP_CONFIG=~/.alias/starship/starship-custom2.toml'
+starship_custom3='export STARSHIP_CONFIG=~/.alias/starship/starship-custom3.toml'
+starship_custom4='export STARSHIP_CONFIG=~/.alias/starship/starship-custom4.toml'
+starship_custom5='export STARSHIP_CONFIG=~/.alias/starship/starship-custom5.toml'
+starship_custom6='export STARSHIP_CONFIG=~/.alias/starship/starship-custom6.toml'
+starship_custom7='export STARSHIP_CONFIG=~/.alias/starship/starship-custom7.toml'
+starship_custom8='export STARSHIP_CONFIG=~/.alias/starship/starship-custom8.toml'
+starship_custom9='export STARSHIP_CONFIG=~/.alias/starship/starship-custom9.toml'
+starship_custom10='export STARSHIP_CONFIG=~/.alias/starship/starship-custom10.toml'
+starship_custom11='export STARSHIP_CONFIG=~/.alias/starship/starship-custom11.toml'
+starship_test='export STARSHIP_CONFIG=~/.alias/starship/starship-test.toml'
+
+# === File to persist the user's selected theme ===
+STARSHIP_CHOICE_FILE="$HOME/.alias/.starship_config"
+
+# === Load and apply saved configuration before Starship initializes ===
+if [[ -f "$STARSHIP_CHOICE_FILE" ]]; then
+    choice=$(<"$STARSHIP_CHOICE_FILE")       # Read saved choice (e.g., "custom3")
+    var="starship_$choice"                   # Construct variable name dynamically
+    if [[ -n "${!var}" ]]; then              # Ensure it exists and is defined
+        eval "${!var}"                       # Evaluate the export to set STARSHIP_CONFIG
+    fi
 fi
 
-# Function to display just the current working directory instead of who path.
-# Includes certain emojis with the cwd.
-function home_prompt {
-    local cwd=$(pwd)
-    if [[ "$cwd" == "$HOME" ]]; then
-        echo "Home${HOUSE}"
-    elif [[ "$cwd" == "$HOME/Documents" ]]; then
-        echo "Documents${DOCS}"
-    elif [[ "$cwd" == "$HOME/Downloads" ]]; then
-        echo "Downloads${DOWNLOAD}"
-    elif [[ "$cwd" == "$HOME/Github" ]]; then
-        echo "Github${GH}"
-    elif [[ "$cwd" == "$HOME/Desktop" ]]; then
-        echo "Desktop${DT} "
-    elif [[ "$cwd" == "$HOME/Videos" ]]; then
-        echo "Videos${VID} "
-    elif [[ "$cwd" == "$HOME/Music" ]]; then
-        echo "Music${MUSIC} "
-    elif [[ "$cwd" == "$HOME/Pictures" ]]; then
-        echo "Pictures${PIC} "
-    else
-        echo "$cwd"
-    fi
+# === Initialize Starship after setting STARSHIP_CONFIG ===
+# eval "$(starship init bash)"
+
+# === Function: prompts ===
+# Provides an interactive menu to select and persist a prompt theme
+prompts() {
+    echo "=== Select Starship Configuration ==="
+
+    # Define the available options for selection
+    local options=(
+      "default"
+      "custom1"
+      "custom2"
+      "custom3"
+      "custom4"
+      "custom5"
+      "custom6"
+      "custom7"
+      "custom8"
+      "custom9"
+      "custom10"
+      "custom11"
+      "test"
+    )
+
+    # Print numbered menu
+    for i in "${!options[@]}"; do
+        printf "%2d) %s\n" $((i + 1)) "${options[i]}"
+    done
+    echo "  q) Cancel"  # Special key to exit
+
+    # Prompt user for input
+    while true; do
+        read -rp "Enter choice [1-${#options[@]} or q]: " input
+
+        if [[ "$input" == "q" ]]; then
+            echo "❎ Canceled."
+            break
+        elif [[ "$input" =~ ^[0-9]+$ ]] && (( input >= 1 && input <= ${#options[@]} )); then
+            local opt="${options[input-1]}"     # Get selected option name
+            local var="starship_$opt"           # Construct variable name
+            echo "$opt" > "$STARSHIP_CHOICE_FILE"  # Save choice to disk
+            eval "${!var}"                      # Set STARSHIP_CONFIG
+            echo "✅ Switched to: $opt"
+            clear && exec bash                  # Restart shell to apply it
+            break
+        else
+            echo "❌ Invalid input. Try again."
+        fi
+    done
 }
-
-# Set Default to default system prompt
-DEFAULT=$PS1
-
-TEST='🚀 \u@\h:\w$  '
-
-# Custom prompts
-CUSTOM="\[${BOLD}${GREEN}\]\$(home_prompt)\[${RESET}\] \$> "
-
-# 24 hour clock without seconds
-TIME24='\A${CLOCK}  \$> '
-
-# 24 hour clock with seconds
-TIME24S='\t${CLOCK}  \$> '
-
-# 12 hour clock without seconds
-TIME12='\@${CLOCK}  \$> '
-
-# 12 hour clock with seconds
-TIME12S='\T${CLOCK}  \$> '
-
-
-# Set the prompt
-PS1=$CUSTOM

@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
 # Commandline shortcuts
-alias refresh='exec bash' # Reload bash without closing terminal
+alias refresh='clear && exec bash' # Reload bash without closing terminal
 alias reboot='systemctl reboot -i' # Reboot the system
 alias chmodx='chmod +x' # Make a file executable
 alias sysinfo='inxi -Fxz' # Show system info
 alias showpath='echo $PATH' # Show the PATH variable
 alias bye='exit' # Exit the shell
+
+alias mvit='mv */*.txt .' # Move all text files in child directorys to parent directory
+alias rad='rmdir */' # Remove all child directories
 
 # Window prompt throw backs
 alias cls='clear' # Clear the screen

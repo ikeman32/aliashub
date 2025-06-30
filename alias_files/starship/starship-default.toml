@@ -1,0 +1,26 @@
+[character]
+success_symbol = '[➤](bold green) '
+error_symbol = '[⌧](bold red) '
+
+[hostname]
+ssh_only = false
+format = "(green bold)"
+disabled = false
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#1d2230"
+format = '[[ 🕙 $time ](fg:#a0a9cb bg:#1d2230)]($style)'
+
+[directory]
+truncation_length = 2
+truncation_symbol = '…/'
+home_symbol = '🏠'
+
+[cmd_duration]
+disabled = true
+
+[os.symbols]
+Mint = "🌿 "
+

@@ -7,7 +7,7 @@
 alias pyrun='python3'
 
 # Install python library
-alias pyinstall='pip3 install -y'
+alias pyinstall='pip3 install'
 
 # Uninstall python library
 alias pyrem='pip3 uninstall'

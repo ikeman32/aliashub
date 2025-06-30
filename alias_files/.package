@@ -12,5 +12,5 @@ alias aptclean='sudo apt clean' # Erase dowloaded archive files
 alias aptinfo='apt show' # Show information about apps
 
 # Upgrade all upgradable apps
-alias upgrade='sudo apt update && sudo apt upgrade -y && flatpak update -y exit'
+alias upgrade='sudo apt update && sudo apt upgrade -y && flatpak update -y && exit'
 alias flatinstall='flatpak install -y' # Install a flatpack

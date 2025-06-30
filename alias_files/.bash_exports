@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
 # This file is for adding apps to the Linux shell environment
+
+export RUSTICL_ENABLE=radeonsi
+export DRI_PRIME=1
+
