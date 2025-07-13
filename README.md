@@ -25,15 +25,21 @@ I've made some drastic changes to the prompt configuration because the original 
 After discovering [starship](https://starship.rs/). Starship offers way better configurations for the
 commandline than my feeble attempt at it. It is truned off by default because if you want to use it you have to choses to install it. 
 
-To install via curl: curl -sS https://starship.rs/install.sh | sh
+13 July 2025
+- Install script now has the ability to install starship and enable it.
+- Typing prompts at the command line wil allow the user to change starship config on the fly
+  with persistence.
+- added man page very basic for now
 
-or [Hombrew(https://brew.sh/)]: brew install starship
 
-After installing starship navigate to ~/.alias/.propmts and uncomment eval "$(starship init bash)"
-Then navigate to ~/.alias/.starship_config and uncomment the only commented line there. Save both files and open a terminal you should see somthing like this 
-![image](image.png)
+# TODO
 
-When I figure out how to automate this entire process I will push an update.
+- remove personal additions to aliases
+- detect Arch based distro and change package management from apt to pacman on install
+- install figlet app and allow user to change the personal logo for the commandline
+  currently set to Thunderbox
+- add option to change default commandline editor for the aliases currently nano
+
 
 ## Installation
 

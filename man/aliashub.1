@@ -1,0 +1,83 @@
+." Man page for aliashub
+."
+.TH ALIASHUB 1 "July 2024" "AliasHub 1.0" "User Commands"
+
+.SH NAME
+aliashub \- a comprehensive alias management system for Bash
+
+.SH SYNOPSIS
+.B install.sh
+
+.SH DESCRIPTION
+AliasHub is a system designed to enhance command-line productivity by providing a centralized and organized way to manage Bash aliases, functions, and prompt settings.
+
+The installation script automates the setup process by creating a configuration directory at
+.I ~/.alias
+, populating it with predefined alias files, and sourcing them from the user's
+.I ~/.bashrc
+file.
+
+It also integrates the
+.B starship
+cross-shell prompt, automating its installation and configuration for an enhanced user experience.
+
+.SH INSTALLATION
+To install AliasHub, navigate to the cloned repository directory and run the installation script:
+.br
+.B ./install.sh
+.br
+The script will handle the creation of necessary files and update your
+.I ~/.bashrc
+file. You must reload your shell configuration for changes to take effect:
+.br
+.B source ~/.bashrc
+
+.SH KEY ALIASES
+AliasHub provides several key aliases to manage your environment:
+.TP
+.B edalias
+Opens the main alias file
+.I (~/.alias/.bash_aliases)
+in your default editor.
+.TP
+.B refresh
+Reloads your shell's configuration, equivalent to running `source ~/.bashrc`.
+.TP
+.B prompts
+Opens the prompt configuration file
+.I (~/.alias/.prompts)
+for editing.
+.TP
+.B upgrade
+Updates and upgrades system packages using the configured package manager.
+
+.SH FILES
+AliasHub uses the following files, which are installed in the
+.I ~/.alias
+directory:
+.TP
+.B ~/.alias/.bash_aliases
+The main file for general-purpose alias definitions.
+.TP
+.B ~/.alias/.bash_functions
+Used for defining custom Bash functions.
+.TP
+.B ~/.alias/.cl
+Contains command-line shortcut aliases.
+.TP
+.B ~/.alias/.package
+Holds aliases related to system package management (e.g., apt, pacman).
+.TP
+.B ~/.alias/.prompts
+Configures the shell prompt, including the initialization for Starship.
+.TP
+.B ~/.alias/.starship_config
+The configuration file for the Starship prompt theme.
+.TP
+.B ~/.bashrc
+This file is modified by the installer to source the AliasHub configuration.
+
+.SH SEE ALSO
+.BR bash (1),
+.BR starship (1),
+.BR source (1p)
