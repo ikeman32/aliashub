@@ -13,16 +13,13 @@ error() {
 enable_starship_config() {
     local starship_config_file="$HOME/.alias/.starship_config"
     local prompts_file="$HOME/.alias/.prompts"
+    local default_theme="default"
 
     echo "Enabling Starship configuration..."
 
-    if [ -f "$starship_config_file" ]; then
-        # Uncomment the line in .starship_config.
-        sed -i 's/^# *//' "$starship_config_file"
-        echo "Enabled starship theme in $starship_config_file."
-    else
-        echo "Warning: Starship config file not found at $starship_config_file."
-    fi
+    # Create the config file with the default theme to ensure Starship starts correctly.
+    echo "$default_theme" > "$starship_config_file"
+    echo "Set default Starship theme to '$default_theme' in $starship_config_file."
 
     if [ -f "$prompts_file" ]; then
         # Uncomment the line 'eval "$(starship init bash)"'
@@ -138,8 +135,8 @@ update_bashrc() {
         {
             echo ""
             echo "# AliasHub configuration"
-            echo "if [ -f \"$new_alias\" ]; then"
-            echo "    . \"$new_alias\""
+            echo "if [ -f $new_alias ]; then"
+            echo "    . $new_alias"
             echo "fi"
         } >> "$bashrc_file"
         echo "Configuration added to .bashrc successfully."
@@ -159,6 +156,12 @@ install_aliases() {
     find "$source_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
     echo "Common alias files installed."
 
+    # Copy the starship configuration directory if it exists
+    if [ -d "$source_dir/starship" ]; then
+        cp -r "$source_dir/starship" "$target_dir/"
+        echo "Starship theme configurations installed."
+    fi
+
     # Detect distribution by checking for package managers
     if command -v pacman &> /dev/null; then
         distro="arch"
@@ -172,17 +175,16 @@ install_aliases() {
 
     echo "Detected $distro-based distribution."
 
-    # Copy the distribution-specific package alias file
-    local pkg_alias_source="$source_dir/${distro}_aliases/.package"
-    local pkg_alias_target="$target_dir/.package"
-
-    if [ -f "$pkg_alias_source" ]; then
-        cp "$pkg_alias_source" "$pkg_alias_target"
-        echo "Installed package management aliases for $distro."
+    # Copy all distribution-specific alias files
+    local distro_alias_dir="$source_dir/${distro}_aliases"
+    if [ -d "$distro_alias_dir" ]; then
+        find "$distro_alias_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+        echo "Installed distribution-specific aliases for $distro."
     else
-        echo "Warning: Package alias file for $distro not found at '$pkg_alias_source'."
-        echo "Defaulting to no package management aliases."
+        echo "Warning: Distribution-specific alias directory not found at '$distro_alias_dir'."
     fi
+
+
 }
 
 # Function to configure the default editor
