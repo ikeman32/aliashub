@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Python Aliases-Arch
+# ===================
+
+# Run a python script
+alias pyrun='python'
+
+# Virtual environment
+
+# Create a virtual environment. Defaults to .venv if no name is given.
+# Usage: vpenv [name]
+vpenv() {
+    local venv_name=${1:-.venv}
+    python -m venv "$venv_name"
+    echo "Virtual environment '$venv_name' created."
+}
+
+# Activate a virtual environment in the current directory.
+# Searches for common venv names: .venv, venv, myvenv
+activate() {
+    for dir in .venv venv myvenv; do
+        if [ -f "$dir/bin/activate" ]; then
+            source "$dir/bin/activate"
+            echo "Activated virtual environment in '$dir'."
+            return 0
+        fi
+    done
+    echo "Error: No virtual environment found to activate."
+    return 1
+}

@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
 
-# Clone git repository
-alias clone='git clone'
+# Git command aliases
+alias gcl='git clone'                   # Clone a repository into a new directory
+alias gs='git status'                   # Show working tree status
+alias ga='git add .'                    # Add all changes in the current directory to the staging area
+alias gc='git commit -m'                # Record changes to the repository with a message
+alias gp='git push'                     # Update remote refs along with associated objects
+alias gpl='git pull'                    # Fetch from and integrate with another repository
+alias gco='git checkout'                # Switch branches or restore working tree files
+alias gcb='git checkout -b'             # Create a new branch and switch to it
+alias gl='git log --oneline --graph --decorate' # Show a compact, graphical log of commits
+alias gb='git branch'                   # List, create, or delete branches

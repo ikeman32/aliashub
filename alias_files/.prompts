@@ -23,7 +23,7 @@ starship_custom7='export STARSHIP_CONFIG=~/.alias/starship/starship-custom7.toml
 starship_custom8='export STARSHIP_CONFIG=~/.alias/starship/starship-custom8.toml'
 starship_custom9='export STARSHIP_CONFIG=~/.alias/starship/starship-custom9.toml'
 starship_custom10='export STARSHIP_CONFIG=~/.alias/starship/starship-custom10.toml'
-starship_custom11='export STARSHIP_CONFIG=~/.alias/starship/starship-custom11.toml'
+# starship_custom11='export STARSHIP_CONFIG=~/.alias/starship/starship-custom11.toml'
 starship_test='export STARSHIP_CONFIG=~/.alias/starship/starship-test.toml'
 
 # === File to persist the user's selected theme ===

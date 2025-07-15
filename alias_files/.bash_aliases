@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-#!/bin/bash
 #==============================================================================
 #
 #          FILE: .bash_aliases
@@ -12,7 +11,7 @@
 #                files and environment settings.
 #
 #       OPTIONS: ---
-#  REQUIREMENTS: ---
+#  REQUIREMENTS: bash
 #         NOTES: This file should be in the $HOME/.alias folder
 #        AUTHOR: David H. Isakson II <david.isakson.ii@gmail.com>
 #       CREATED: October 20, 2024
@@ -81,4 +80,4 @@ fi
 
 
 # Run logo function from .bash_functions
-logo
+# logo

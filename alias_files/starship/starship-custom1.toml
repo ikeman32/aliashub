@@ -1,92 +1,278 @@
-# Customizing the prompt format
-format = """
-[$user(bold blue)$username$hostname](bold yellow) $directory$rust$git_branch$git_status$package$golang$terraform$docker_context$python$docker_context$nodejs$container$battery$cmd_duration$character
-[╰─λ](bold green) 
-"""
+format = '''
+🦦 $username$hostname$git_branch$directory \($c$cmake$crystal$deno$docker_context$fennel$fossil_branch$golang$haxe$jobs$kotlin$lua$hg_branch$nodejs$php$python$raku$rust$swift$vlang$zig\) $spack $terraform $fill $memory_usage $time
+$character'''
 
-# Customizing the appearance of the username
-[username]
-style_user = "green bold"
-style_root = "red bold"
-format = "[$user]($style) "
-disabled = false
-show_always = true
+scan_timeout = 10
+add_newline = true
 
-# Customizing the appearance of the hostname
-[hostname]
-ssh_only = false
-format = 'on [Thunderbox](bold yellow) '
-trim_at = "."
-disabled = false
-
-# Customizing the character symbol in the prompt
-[character]
-success_symbol = "[✔](bold green)"
-error_symbol = "[✗](bold red)"
-
-################################################################################
-## GIT
-################################################################################
-[git_branch]
-format = '\[[$symbol$branch]($style)\]'
-symbol = ' '
-style = "bold green"
-
-[git_status]
-conflicted = "⚔️ "
-ahead = "💨${count} "
-behind = "🐢${count} "
-diverged = "🔱 💨${ahead_count} 🐢${behind_count} "
-untracked = "🛤️ ${count} "
-stashed = "📦 "
-modified = "📝${count} "
-staged = "🗃️ ${count} "
-renamed = "📛${count} "
-deleted = "🗑️ ${count} "
-style = "bright-white"
-format = '\[ $all_status$ahead_behind\]'
-
-[git_commit]
-commit_hash_length = 8
-style = "bold white"
-tag_symbol = '🔖 '
-disabled = false
-
-################################################################################
-## Shell
-################################################################################
-[battery]
-full_symbol = "🔋"
-charging_symbol = "🔌"
-discharging_symbol = "⚡"
-
-[[battery.display]]
-threshold = 30
-style = "bold red"
-
-[cmd_duration]
-min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
-format = '\[[⏱ $duration]($style)\]'
-style = 'yellow'
-
-[time]
-time_format = "%T"
-format = "🕙 $time($style) "
-style = "bright-white"
+[aws]
 disabled = true
 
-[status]
-format = '[$symbol$status]($style)'
-error_symbol = "✖"
-success_symbol = "✔"
-style_success = "green"
-style_failure = "red"
+[azure]
+disabled = true
 
-################################################################################
-## System Information
-################################################################################
+[battery]
+disabled = true
+
+[buf]
+disabled = true
+
+[bun]
+disabled = true
+
+[c]
+disabled = false
+
+[character] 
+disabled = false
+success_symbol = '[ ↳](bold green)'
+error_symbol = '[ ↳](bold red)'
+
+[cmake]
+disabled = false
+
+[cobol]
+disabled = true
+
+[cmd_duration]
+show_milliseconds = false
+format = '⏲️ [$duration]($style)'
+show_notifications = true
+min_time_to_notify = 15
+
+[conda]
+disabled = true
 
 [container]
-format = '\[[$symbol$name]($style)\]'
-symbol = "📦 "
-style = "blue"
+disabled = true
+
+[crystal]
+disabled = false # Might try messing with Crystal at some point
+
+[daml]
+disabled = true # I really don't give a rat's ass about blockchain
+
+[dart]
+disabled = true
+
+[deno]
+disabled = false # Might tinker with this too.
+
+[directory]#
+style = 'bold blue'
+disabled = false
+format = 'at [$path]($style)'
+
+[docker_context]
+disabled = false # Not in the mood to fuck with docker again but might still need it.
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[env_var]
+disabled = true
+
+[erlang]
+disabled = true
+
+[fennel]
+disabled = false # Looks interesting.
+
+[fill]
+disabled = false
+symbol = '---'
+style = '#878787'
+
+[fossil_branch]
+disabled = false
+
+[gcloud]
+disabled = true # Probably not using this any time soon.
+
+[git_branch]
+disabled = false
+
+[git_commit]
+disabled = true
+
+[git_state]
+disabled = true
+
+[git_metrics]
+disabled = true # Might be cool, but shouldn't worry about adds/dels.
+
+[git_status]
+disabled = true # Running through PowSH, WSL /mnt/c/ speed isn't a problem
+
+[golang]
+disabled = false # Go is still something I want to tinker with eventually again.
+
+[guix_shell]
+disabled = true # Don't use it, probably never will.
+
+[gradle]
+disabled = true # I hope the fuck not.
+
+[haskell]
+disabled = true # Nah.
+
+[haxe]
+disabled = false # Looks cool.
+
+[helm]
+disabled = true # Kubernetes, probably not gonna use that any time soon either.
+
+[hostname]
+disabled = false
+ssh_only = true
+format = 'on [🌐$hostname ](bold green)'
+
+[java]
+disabled = true
+
+[jobs]
+disabled = false
+
+[julia]
+disabled = true # Maybe someday.
+
+[kotlin]
+disabled = false
+
+[kubernetes]
+disabled = true
+
+[line_break]
+disabled = false
+
+[localip]
+disabled = true # Kinda pointless rn
+
+[lua]
+disabled = false
+
+[memory_usage]
+disabled = false
+format = '(RAM: ${ram_pct})(#bababa)'
+threshold = 75
+
+[meson]
+disabled = true
+
+[hg_branch]
+disabled = false
+
+[nim]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[nodejs]
+disabled = false
+format = ' [$symbol($version )]($style)'
+
+[ocaml]
+disabled = true
+
+[opa]
+disabled = true
+
+[openstack]
+disabled = true
+
+[os]
+disabled = true
+
+[package]
+disabled = false
+
+[perl]
+disabled = true
+
+[php]
+disabled = false
+
+[pijul_channel]
+disabled = true
+
+[pulumi]
+disabled = true
+
+[purescript]
+disabled = true # Might be cool though, maybe.
+
+[python]
+disabled = false
+
+[rlang]
+disabled = true
+
+[raku]
+disabled = false # Maybe??
+
+[red]
+disabled = true
+
+[ruby]
+disabled = true # lolno
+
+[rust]
+disabled = false # that's more like it.
+
+[scala]
+disabled = true
+
+[shell]
+disabled = true
+
+[shlvl]
+disabled = true
+
+[singularity]
+disabled = true
+
+[spack]
+disabled = false
+
+[status]
+disabled = true
+
+[sudo]
+disabled = true
+
+[swift]
+disabled = false
+
+[terraform]
+disabled = false
+
+[time]
+disabled = false
+format = '[ $time ]($style)'
+style = 'bg:#303030'
+
+[username]
+disabled = false
+show_always = true
+style_root = 'bold red'
+style_user = 'bold green'
+format = '[$user ]($style)'
+
+[vagrant]
+disabled = true
+
+[vlang]
+disabled = false
+
+[vcsh]
+disabled = true
+
+[zig]
+disabled = false

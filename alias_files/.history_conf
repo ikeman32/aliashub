@@ -14,10 +14,10 @@ HISTCONTROL=ignoreboth
 HISTIGNORE='sudo *':'echo w*' 
 
 # Add history immediately
-PROMPT_COMMAND='history -a' 
+PROMPT_COMMAND="history -a;${PROMPT_COMMAND}"
 
 # Append new history instead of overwritting
 shopt -s histappend
 
 # clear bash history
-alias clhist='history -c && history -w && echo "" > ~/.bash_history'
+alias clhist='history -c && history -w'

@@ -61,6 +61,68 @@ check_and_install_starship() {
     fi
 }
 
+# Function to configure the startup logo
+configure_logo() {
+    local bash_functions_file="$HOME/.alias/.bash_functions"
+    local default_logo="Thunderbox"
+    local chosen_logo=""
+
+    read -p "Enter the text for your startup logo [default: Thunderbox]: " chosen_logo
+    # If user enters nothing, use the default
+    chosen_logo=${chosen_logo:-$default_logo}
+
+    if [ -f "$bash_functions_file" ]; then
+        # Use sed to replace the LOGO variable value.
+        sed -i "s|^LOGO=.*|LOGO=\"$chosen_logo\"|" "$bash_functions_file"
+        echo "Startup logo set to '$chosen_logo'."
+    else
+        echo "Warning: .bash_functions file not found at $bash_functions_file. Cannot set logo."
+    fi
+}
+
+# Function to enable the logo by uncommenting the call in .bash_aliases
+enable_logo() {
+    local bash_aliases_file="$HOME/.alias/.bash_aliases"
+
+    if [ -f "$bash_aliases_file" ]; then
+        # Uncomment the 'logo' call at the end of the file
+        sed -i 's/^# *\(logo\)$/\1/' "$bash_aliases_file"
+        echo "Enabled startup logo display."
+    else
+        echo "Warning: .bash_aliases file not found at $bash_aliases_file. Cannot enable logo."
+    fi
+}
+
+# Function to check for and optionally install figlet
+check_and_install_figlet() {
+    if command -v figlet &> /dev/null; then
+        echo "Figlet is already installed."
+        configure_logo
+        enable_logo
+        return
+    fi
+
+    echo "Figlet is not found."
+    read -p "It is required to display the startup logo. Would you like to install it now? (y/n) " -n 1 -r
+    echo # Move to a new line
+
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "Installing figlet..."
+        if command -v apt &> /dev/null; then
+            sudo apt update && sudo apt install -y figlet || error "figlet installation failed."
+        elif command -v pacman &> /dev/null; then
+            sudo pacman -S --noconfirm figlet || error "figlet installation failed."
+        else
+            error "Cannot install figlet. Unsupported package manager. Please install it manually."
+        fi
+        echo "Figlet installed successfully."
+        configure_logo
+        enable_logo
+    else
+        echo "Skipping figlet installation. The startup logo will not be displayed."
+    fi
+}
+
 # Function to update .bashrc
 update_bashrc() {
     local bashrc_file="$HOME/.bashrc"
@@ -84,20 +146,70 @@ update_bashrc() {
     fi
 }
 
-# Function to install .alias folder and files
-install_env_folder() {
-    local source_dir="./alias_files"  # Directory containing your .alias files
+# Function to detect distro and copy appropriate alias files
+install_aliases() {
+    local source_dir="./alias_files"
     local target_dir="$HOME/.alias"
+    local distro=""
 
-    # Create .alias directory if it doesn't exist
+    echo "Installing alias files..."
     mkdir -p "$target_dir"
 
-    # Copy all files, including hidden ones, from source directory to .alias
-    shopt -s dotglob  # Enable including hidden files in * expansion
-    cp -R "$source_dir"/* "$target_dir" 2>/dev/null || true
-    shopt -u dotglob  # Disable including hidden files in * expansion
+    # Copy all common (non-directory) alias files from the root of alias_files
+    find "$source_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+    echo "Common alias files installed."
 
-    echo "Installed .alias folder and files successfully."
+    # Detect distribution by checking for package managers
+    if command -v pacman &> /dev/null; then
+        distro="arch"
+    elif command -v apt &> /dev/null; then
+        distro="debian"
+    else
+        echo "Warning: Unsupported package manager. Could not determine distribution."
+        echo "Package management aliases will not be installed. Please copy one manually from the 'alias_files' directory."
+        return
+    fi
+
+    echo "Detected $distro-based distribution."
+
+    # Copy the distribution-specific package alias file
+    local pkg_alias_source="$source_dir/${distro}_aliases/.package"
+    local pkg_alias_target="$target_dir/.package"
+
+    if [ -f "$pkg_alias_source" ]; then
+        cp "$pkg_alias_source" "$pkg_alias_target"
+        echo "Installed package management aliases for $distro."
+    else
+        echo "Warning: Package alias file for $distro not found at '$pkg_alias_source'."
+        echo "Defaulting to no package management aliases."
+    fi
+}
+
+# Function to configure the default editor
+configure_editor() {
+    local confedit_file="$HOME/.alias/.confedit"
+    local default_editor="nano"
+    local chosen_editor=""
+
+    # Ensure the target file exists before trying to modify it
+    if [ ! -f "$confedit_file" ]; then
+        echo "Warning: Configuration edit file not found at $confedit_file. Skipping editor setup."
+        return
+    fi
+
+    read -p "Enter your preferred command-line editor [default: nano]: " chosen_editor
+    # If user enters nothing, use the default
+    chosen_editor=${chosen_editor:-$default_editor}
+
+    # Check if the chosen editor is a valid command
+    if ! command -v "$chosen_editor" &> /dev/null; then
+        echo "Warning: Editor '$chosen_editor' not found in your PATH. Defaulting to '$default_editor'."
+        chosen_editor=$default_editor
+    fi
+
+    # Update the .confedit file with the chosen editor
+    sed -i "s|^edit=.*|edit='$chosen_editor'|" "$confedit_file"
+    echo "Default editor set to '$chosen_editor'."
 }
 
 # Function to install the man page
@@ -129,8 +241,14 @@ install_man_page() {
 main_install() {
     echo "Starting installation process..."
 
-    # Install .alias folder and files
-    install_env_folder
+    # Install alias files, detecting the distribution for package management
+    install_aliases
+
+    # Configure the default editor
+    configure_editor
+
+    # Check for figlet, offer to install, and configure the logo
+    check_and_install_figlet
 
     # Update .bashrc
     update_bashrc

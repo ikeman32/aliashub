@@ -20,49 +20,52 @@ AliasHub is a comprehensive alias management system for Bash, designed to enhanc
 - Organized structure for different types of aliases (e.g., git, navigation, package management)
 - Flexible and extensible design
 
-**Changes**
-I've made some drastic changes to the prompt configuration because the original method sucked.
-After discovering [starship](https://starship.rs/). Starship offers way better configurations for the
-commandline than my feeble attempt at it. It is truned off by default because if you want to use it you have to choses to install it. 
+### Changelog
 
-13 July 2025
-- Install script now has the ability to install starship and enable it.
-- Typing prompts at the command line wil allow the user to change starship config on the fly
-  with persistence.
-- added man page very basic for now
+**July 2024**
+- Replaced the previous custom prompt with [Starship](https://starship.rs/) for more powerful and flexible customization.
+- The installer now interactively prompts the user to install Starship and enables it on confirmation.
+- Added a basic man page for `aliashub`.
+- The installation script now automatically detects the user's package manager (`apt` or `pacman`) and installs the correct aliases.
+- Added support for Arch-based distributions.
+- The installer checks for `figlet` and offers to install it, allowing the user to set a custom ASCII logo for their terminal startup.
+- Users can now set their preferred command-line editor during installation.
 
+## TODO
 
-# TODO
-
-- remove personal additions to aliases
-- detect Arch based distro and change package management from apt to pacman on install
-- install figlet app and allow user to change the personal logo for the commandline
-  currently set to Thunderbox
-- add option to change default commandline editor for the aliases currently nano
-
+- **Create an `uninstall.sh` script:** A script to safely remove `~/.alias` and revert changes to `.bashrc`.
+- **Add support for more distributions:** Extend package manager support to include `dnf` (Fedora) and `zypper` (openSUSE).
+- **Review personal aliases:** Generalize any remaining user-specific aliases in files like `.cl` to be useful for a wider audience.
+- **Add more alias modules:** Create new alias files for common developer tools like Docker, `kubectl`, etc.
+- **Add support for other shells** `zsh`, `fish`, etc
 
 ## Installation
 
 1. Clone the AliasHub repository:
-git clone https://github.com/yourusername/AliasHub.git ~/.aliashub
+```bash
+git clone https://github.com/yourusername/AliasHub.git
+```
 
 
 2. Navigate to the AliasHub directory:
-cd aliashub
+```bash
+cd AliasHub
+```
 
 
 3. Run the installation script:
-chmod +x install.sh && ./install.sh
-
-or 
-
-bash install.sh
+```bash
+chmod +x install.sh
+./install.sh
+```
 
 
 This script will automatically add the necessary line to your `~/.bashrc` file to set up AliasHub.
 
 4. Reload your Bash configuration or restart your terminal:
+```bash
 source ~/.bashrc
+```
 
 
 ## Usage
@@ -70,7 +73,7 @@ source ~/.bashrc
 After installation, you can start using the pre-configured aliases immediately. Here are some examples:
 
 - `pyrun`: Run a Python script
-- `clone`: Clone a git repository
+- `gcl`: Clone a git repository
 - `edalias`: Edit your bash aliases
 - `upgrade`: Update and upgrade system packages
 
@@ -80,19 +83,23 @@ alias
 
 ## Configuration
 
-AliasHub's configuration files are located in the `~/.aliashub` directory. Key files include:
+AliasHub's configuration files are located in the `~/.alias` directory. Key files include:
 
 - `.bash_aliases`: Main alias definitions
 - `.bash_functions`: Custom Bash functions
+- `.confedit`: Defines the editor used by `edalias`.
 - `.cl`: Command-line shortcuts
+- `.gitcmd`: Aliases for common Git commands.
 - `.package`: Package management aliases
+- `.python`: Aliases and functions for Python development.
 - `.prompts`: Prompt configurations
+- `.starship_config`: Configuration for the Starship prompt.
 
 ## Customization
 
 To add your own aliases or modify existing ones:
 
-1. Edit the appropriate configuration file (e.g., `~/.aliashub/.bash_aliases`)
+1. Edit the appropriate configuration file (e.g., `~/.alias/.bash_aliases`)
 2. Add your new alias or modify an existing one
 3. Save the file and run `refresh` to reload your Bash configuration
 

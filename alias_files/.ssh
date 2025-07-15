@@ -1,5 +1,5 @@
 #!/usr/bin/env bash 
 
-alias mcserver='ssh duke@192.168.254.86'
-alias mcremote='ssh duke@dukesmc.dynamic-dns.net'
-alias vtt='ssh duke@192.168.254.105'
+# Quick connect to servers in the form
+# alias <alias name> <username>@<server ip|domain>
+
